@@ -91,7 +91,7 @@ const esBundler = () => {
   })
 
   configs.push({
-    input: 'src/index.ts',
+    input: 'src/index.tsx',
     output: {
       file: path.resolve(__dirname, 'es/index.d.ts'),
     },
@@ -101,7 +101,7 @@ const esBundler = () => {
   if (!fs.existsSync(path.resolve(process.cwd(), 'es'))) {
     fs.mkdirSync(path.resolve(process.cwd(), 'es'))
   }
-  const buffer = fs.readFileSync(path.resolve(process.cwd(), 'src/index.ts'))
+  const buffer = fs.readFileSync(path.resolve(process.cwd(), 'src/index.tsx'))
   const strData = buffer.toString().replaceAll('/modules', '')
 
   fs.writeFileSync(path.resolve(process.cwd(), 'es/index.js'), strData)
@@ -112,7 +112,7 @@ const esBundler = () => {
 const cjsBundler = () => {
   return [
     {
-      input: 'src/index.ts',
+      input: 'src/index.tsx',
       output: {
         file: path.resolve(__dirname, 'cjs/index.js'),
         format: 'cjs',
@@ -126,7 +126,7 @@ const cjsBundler = () => {
 const umdBundler = () => {
   return [
     {
-      input: 'src/index.ts',
+      input: 'src/index.tsx',
       output: {
         name: 'ICEMaterial',
         file: path.resolve(__dirname, 'dist/index.js'),
