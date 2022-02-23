@@ -1,72 +1,13 @@
+import Container from './Container';
+import Either from './Either';
+import Maybe from './Maybe';
+const { Left, Right } = Either;
 
 type MapFnType = (v: any) => any;
 
 const compose = (...fns: Function[]) => {
   return (trigger: any) => {
     return fns.reduceRight((temp, fn) => fn(temp), trigger)
-  }
-}
-
-class Container {
-  __value: any;
-
-  constructor(value: any) {
-    this.__value = value;
-  }
-  static of (value: any) {
-    return new Container(value);
-  }
-
-  map(f: MapFnType) {
-    return Container.of(f(this.__value));
-  }
-}
-
-class Maybe {
-  __value: any;
-  constructor(value: any) {
-    this.__value = value;
-  }
-
-  static of(value: any) {
-    return new Maybe(value);
-  }
-
-  isNothing() {
-    return this.__value === undefined || this.__value === null;
-  }
-
-  map(f: MapFnType) {
-    return this.isNothing() ? Maybe.of(null) : Maybe.of(f(this.__value));
-  }
-}
-
-class Left {
-
-  __value: any;
-  constructor(value: any) {
-    this.__value = value;
-  }
-
-  static of(value: any) {
-    return new Left(value)
-  }
-
-  map(f: MapFnType) {
-    return this;
-  }
-}
-
-class Right {
-  __value: any;
-  constructor(value: any) {
-    this.__value = value;
-  }
-  static of(value: any) {
-    return new Right(value);
-  }
-  map(f: MapFnType) {
-    return Right.of(f(this.__value));
   }
 }
 
@@ -88,10 +29,6 @@ const getNameOfUser = (user: any) => {
 }
 
 
-// Container.of(100).map(addTen).map(logger).__value
-// Maybe.of(100).map(addTen).map(logger).__value
-// Maybe.of(null).map(logger).__value
-
 const doSomethingMaybeError = () => {
   const random = Math.round(Math.random() * 1234);
   try {
@@ -103,46 +40,6 @@ const doSomethingMaybeError = () => {
 }
 
 const res = doSomethingMaybeError()
-
-const either = (f: any, g: any) => (e: Left | Right) => {
-  switch (e.constructor) {
-    case Left:
-      return f(e.__value);
-    case Right:
-      return g(e.__value);
-  }
-}
-
-// class IO {
-//   __value: any;
-//   constructor(f: any) {
-//     this.__value = f;
-//   }
-
-//   static of(f: any) {
-//     return new IO(() => f);
-//   }
-
-//   map(f: any) {
-//     return new IO(compose(f, this.__value));
-//   }
-// }
-
-class IO {
-  __value: any;
-  constructor(f: any) {
-    this.__value = f;
-  }
-  static of (f: any) {
-    return new IO(function() {
-      return f;
-    }); 
-  }
-  map(f: any) {
-    return new IO(compose(f, this.__value));
-  }
-}
-
 
 const post = {
   title: 'TITLE',
