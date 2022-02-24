@@ -1,10 +1,12 @@
-class Maybe {
-  __value: any;
-  constructor(value: any) {
+import { FunctionType } from "src/types";
+
+class Maybe<T = any> {
+  __value: T;
+  constructor(value: T) {
     this.__value = value;
   }
 
-  static of(value: any) {
+  static of<T = any>(value: T) {
     return new Maybe(value);
   }
 
@@ -12,13 +14,13 @@ class Maybe {
     return this.__value === undefined || this.__value === null;
   }
 
-  map(f: Function) {
+  map(f: FunctionType): Maybe {
     return this.isNothing() ? Maybe.of(null) : Maybe.of(f(this.__value));
   }
 }
 
-export const maybe = (msg: any, f: Function, m: Maybe) => {
+export const maybe = <T = any>(msg: T, f: FunctionType, m: Maybe) => {
   return m.isNothing() ? msg : f(m.__value);
-}
+};
 
 export default Maybe;
