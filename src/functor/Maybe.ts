@@ -17,6 +17,10 @@ class Maybe<T = any> {
   map(f: FunctionType): Maybe {
     return this.isNothing() ? Maybe.of(null) : Maybe.of(f(this.__value));
   }
+
+  flatMap() {
+    return this.isNothing() ? null : this.__value;
+  }
 }
 
 export const maybe = <T = any>(msg: T, f: FunctionType, m: Maybe) => {

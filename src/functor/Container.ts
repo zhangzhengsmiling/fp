@@ -12,6 +12,11 @@ class Container<T> {
   map(fn: FunctionType) {
     return Container.of(fn(this.__value));
   }
+
+  flatMap() {
+    return this.__value;
+  }
+
 }
 
 export default Container;

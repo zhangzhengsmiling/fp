@@ -1,7 +1,3 @@
-// import { compose } from '../modules'
-// import { FunctionType } from '../types';
-// import { identity } from '../combinator';
-
 type FunctionType = (...args: unknown[]) => unknown;
 
 const compose = (...fns: FunctionType[]) => {
@@ -36,6 +32,10 @@ class Task {
 
   execute() {
     return this.__value(this.resolve, this.reject)
+  }
+
+  flatMap() {
+    return this.__value();
   }
 }
 

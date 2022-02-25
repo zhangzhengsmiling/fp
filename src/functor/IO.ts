@@ -14,6 +14,9 @@ class IO {
   map(f: FunctionType) {
     return new IO(compose(f, this.__value));
   }
+  flatMap() {
+    return this.__value();
+  }
 }
 
 export default IO;

@@ -12,6 +12,10 @@ class Left <T = any>{
   map(f: FunctionType) {
     return this;
   }
+
+  flatMap() {
+    return null;
+  }
 }
 
 class Right<T = any> {
@@ -24,6 +28,10 @@ class Right<T = any> {
   }
   map(f: FunctionType) {
     return Right.of(f(this.__value));
+  }
+
+  flatMap() {
+    return this.__value;
   }
 }
 
