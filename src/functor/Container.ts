@@ -1,5 +1,4 @@
-import { FunctionType } from './../types.d';
-class Container<T> {
+import { FunctionType } from './../types.d';class Container<T> {
   __value: T;
 
   constructor(value: T) {
@@ -17,6 +16,9 @@ class Container<T> {
     return this.__value;
   }
 
+  ap(c: Container<T>) {
+    return c.map(this.__value as any)
+  }
 }
 
 export default Container;
