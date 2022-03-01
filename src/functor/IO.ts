@@ -17,6 +17,11 @@ class IO {
   flatMap() {
     return this.__value();
   }
+
+  ap(io: IO) {
+    return io.map(this.__value() as FunctionType)
+  }
 }
+
 
 export default IO;

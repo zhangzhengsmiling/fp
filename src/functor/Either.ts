@@ -16,6 +16,10 @@ class Left <T = any>{
   flatMap() {
     return null;
   }
+
+  ap(l: Left) {
+    return l.map(this.__value as any);
+  }
 }
 
 class Right<T = any> {
@@ -32,6 +36,10 @@ class Right<T = any> {
 
   flatMap() {
     return this.__value;
+  }
+
+  ap(r: Right) {
+    return r.map(this.__value as any);
   }
 }
 
