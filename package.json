@@ -1,6 +1,6 @@
 {
   "name": "@ice-age/fp",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "module": "es/index.js",
   "main": "dist/index.js",
   "types": "./es/index.d.ts",
@@ -9,7 +9,7 @@
     "build:es": "tsc",
     "build:umd": "tsc --target es5 --module umd --outDir dist",
     "build": "yarn run build:es & yarn run build:umd",
-    "publish": "yarn build && npm publish --registry https://registry.npmmirror.com"
+    "publish": "yarn build && npm publish --registry=https://registry.npmmirror.com --access public"
   },
   "devDependencies": {
     "@types/react": "^17.0.38",
