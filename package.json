@@ -1,9 +1,10 @@
 {
   "name": "fp-libs",
   "version": "1.0.0",
-  "module": "es/index.js",
+  "module": "./es/index.js",
   "types": "./es/index.d.ts",
   "license": "MIT",
+  "type": "module",
   "scripts": {
     "build": "tsc"
   },

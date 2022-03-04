@@ -139,8 +139,6 @@ var ex1 = compose(
   safeProp('address')
 )
 
-// console.log(ex1(user))
-
 
 const fileName = 'this is filename';
 
@@ -195,7 +193,6 @@ var ex3 = getPost(1)
 
 // ex3.execute()
 
-
 class Container<T> {
   __value: T;
 
@@ -222,31 +219,8 @@ class Container<T> {
 
 const add = curry((a: number, b: number) => a + b);
 
-
 // partial apply
 const v = Container.of(100).map(add).ap(Container.of(20))
-  // .map(tap(console.log))
-
-// console.log(Container.of(100).map(add(20)).__value === Container.of(add(20)).ap(Container.of(100)).__value)
-
-// Maybe.of(add)
-//   .ap(Maybe.of(100))
-//   .ap(Maybe.of(200))
-//   .map(tap(console.log))
-// const render = curry((a, b, c) => {
-//   return (
-//     `div ${a}\n` + `div ${b}\n` + `div ${c}\n`
-//   )
-// })
-// const d = Container.of(render)
-//   .ap(Container.of(Math.random()) as any)
-//   .ap(Container.of(Math.random()))
-//   .ap(Maybe.of(null))
-
-//   maybe('====', console.log, d)
-
-
-  // console.log(d)
 
 
 const signIn = curry((username: string, password: string) => {
@@ -256,27 +230,59 @@ const signIn = curry((username: string, password: string) => {
 })
 
 const input = {
-  username: 'zhangzheng',
-  password: 'aa'
+  username: 'zhangzhengsmiling',
+  password: 'zz'
 };
 
-const logString = (v: any) => console.log(v.toString())
-
-const inputIO = IO.of(input);
-
-const login = Container.of(add)
-  .ap(Container.of(1) as any)
-  .ap(Container.of(2))
-
+const signInIO = IO.of(signIn)
+  .ap(IO.of(input.username))
+  .ap(IO.of(input.password))
+  .map(Maybe.of)
+signInIO.__value();
 
 IO.of(100)
   .map(v => v + 50)
   .map(v => v * 2)
-  .map(tap(console.log))
   .__value()
 
-  const add100 = (v: number) => v + 100;
+const add100 = (v: number) => v + 100;
 
-  const io = IO.of(add100)
-    .ap(IO.of(10))
-  console.log(io.__value())
+const io = IO.of(add100)
+  .ap(IO.of(10))
+
+const chain = (f: any) => (m: {flatMap: any; map: any;}) => {
+  return m.map(f).flatMap()
+}
+
+const double = (v: number) => v * 2;
+
+const test = () => {
+  return compose(
+    map(double),
+    chain(identity),
+    Maybe.of,
+    Container.of
+  )
+}
+
+const d = test()
+console.log(d(100))
+
+const querySelect = (selector: string) => {
+  return new IO(() => {
+    return {
+      ele: selector
+    }
+  })
+}
+
+const ids = ['#a', '#b', '#c'];
+
+const i = IO.of(ids)
+  .map(map(querySelect))
+  .map(tap(console.log))
+
+const res = i.__value().map((i: any) => i.__value());
+console.log(res);
+
+
