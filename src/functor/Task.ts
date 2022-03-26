@@ -1,6 +1,6 @@
 import { FunctionType } from './../types.d';
 import { compose } from '../modules';
-import { identity } from '../combinator'
+import { identity } from '../combinator';
 class Task {
   __value: any;
   resolve: any = identity;
@@ -24,7 +24,7 @@ class Task {
   }
 
   execute() {
-    return this.__value(this.resolve, this.reject)
+    return this.__value(this.resolve, this.reject);
   }
 
   flatMap() {

@@ -19,7 +19,7 @@ class IO {
   }
 
   ap(io: IO) {
-    return io.map(this.__value() as FunctionType)
+    return io.map(this.__value() as FunctionType);
   }
 }
 
