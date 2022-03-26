@@ -174,12 +174,21 @@ const mockResolve = (callback: any) => {
   }, 1000)
 }
 
+const divide2 = (value: number) => {
+  while((value & 1) === 0 && value !== 0) {
+    value >>= 1;
+  }
+  return value
+}
+
 const task = Task.of((resolve: any, reject: any) => {
   return mockResolve((error: Error, data: any) => {
     if (error) return reject(error);
     resolve(data);
   })
 })
+  .map(tap(console.log))
+  .map(divide2)
   .map(tap(console.log))
   .fail(tap(console.log))
   .fork()
