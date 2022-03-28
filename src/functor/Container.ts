@@ -1,24 +1,28 @@
-import { FunctionType } from './../types.d';class Container<T> {
+import {  Mapper } from './../types.d';
+
+class Container<T> {
   __value: T;
+  static of<T>(value: T) {
+    return new Container(value);
+  }
 
   constructor(value: T) {
     this.__value = value;
   }
-  static of<T = any>(value: T) {
-    return new Container(value);
+
+  map<RetType>(fn: Mapper<T, RetType>) {
+    return Container.of<RetType>(fn(this.__value));
   }
 
-  map(fn: FunctionType) {
-    return Container.of(fn(this.__value));
-  }
-
-  flatMap() {
+  flatten() {
     return this.__value;
   }
 
-  ap(c: Container<T>) {
-    return c.map(this.__value as any)
+  ap(container: Container<any>) {
+    return container.map(this.__value as any)
   }
+
 }
+
 
 export default Container;
