@@ -1,27 +1,27 @@
-import { FunctionType } from './../types.d';
+import { Mapper } from './../types.d';
 import compose from '../modules/compose';
 
-class IO {
-  __value: FunctionType;
-  constructor(f: FunctionType) {
-    this.__value = f;
+class IO<T> {
+  __value: () => T;
+  constructor(value: () => T) {
+    this.__value = value;
   }
-  static of<T>(v: T) {
-    return new IO(function() {
-      return v;
-    }); 
+
+  static of<T>(value: T) {
+    return new IO(() => value);
   }
-  map(f: FunctionType) {
-    return new IO(compose(f, this.__value));
+
+  map<RetType>(fn: Mapper<T, RetType>) {
+    return new IO<RetType>(compose(fn, this.__value));
   }
-  flatMap() {
+
+  flatten() {
     return this.__value();
   }
 
-  ap(io: IO) {
-    return io.map(this.__value() as FunctionType);
+  ap(container: IO<any>) {
+    return container.map(this.__value() as any)
   }
 }
-
 
 export default IO;

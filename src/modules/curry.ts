@@ -1,13 +1,10 @@
-import { FunctionType } from './../types.d';
-const curry = function (f: FunctionType, len = f.length) {
-  return function (...args: any[]) {
-    if (len <= args.length) {
-      return f(...args);
+import { FunctionType } from 'src/types';
+const curry = (fn: FunctionType, len = fn.length) => {
+  return (...args: any[]) => {
+    if (args.length >= len) {
+      return fn(...args);
     }
-    return curry(
-      (...rest: any[]) => f(...args, ...rest),
-      len - args.length
-    );
+    return curry((...rest: any[]) => fn(...args, ...rest), len - args.length);
   };
 };
 

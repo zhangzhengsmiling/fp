@@ -1,49 +1,51 @@
-import { FunctionType } from './../types.d';
-class Left <T = any>{
+import { FunctionType, Mapper } from './../types.d';
+
+class Left<T> {
   __value: T;
   constructor(value: T) {
     this.__value = value;
   }
 
-  static of<T = any>(value: T) {
+  static of<T>(value: T) {
     return new Left(value);
   }
 
-  map(f: FunctionType) {
+  map<RetType>(fn: Mapper<T, RetType>) {
     return this;
   }
 
-  flatMap() {
-    return null;
+  flatten() {
+    return this.__value;
   }
-
-  ap(l: Left) {
-    return l.map(this.__value as any);
+  ap(container: Left<any>) {
+    return container.map(this.__value as any)
   }
 }
 
-class Right<T = any> {
+class Right<T> {
   __value: T;
   constructor(value: T) {
     this.__value = value;
   }
-  static of<T = any>(value: T) {
+
+  static of<T>(value: T) {
     return new Right(value);
   }
-  map(f: FunctionType) {
-    return Right.of(f(this.__value));
+
+  map<RetType>(fn: Mapper<T, RetType>) {
+    return Right.of(fn(this.__value));
   }
 
-  flatMap() {
+  flatten() {
     return this.__value;
   }
 
-  ap(r: Right) {
-    return r.map(this.__value as any);
+  ap(container: Right<any>) {
+    return container.map(this.__value as any)
   }
 }
 
-export const either = (f: FunctionType, g: FunctionType, e: Left | Right) => {
+export const either = <T>(f: FunctionType, g: FunctionType, e: Left<T> | Right<T>) => {
   switch(e.constructor) {
     case Left:
       return f(e.__value);

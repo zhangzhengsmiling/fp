@@ -1,8 +1,8 @@
-import { FunctionType } from './../types.d';
-
-const compose = (...fns: FunctionType[]) => {
-  return (trigger: any) => {
-    return fns.reduceRight((temp, fn) => fn(temp), trigger);
+const compose = <Param, RetType>(...fns: any[]) => {
+  return (trigger?: Param) => {
+    return fns.reduceRight((prev, fn) => {
+      return fn(prev);
+    }, trigger) as RetType;
   };
 };
 

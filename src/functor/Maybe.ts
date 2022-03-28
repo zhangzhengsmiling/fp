@@ -1,33 +1,33 @@
-import { FunctionType } from "src/types";
+import { FunctionType , Mapper } from "src/types";
 
-class Maybe<T = any> {
+class Maybe<T> {
   __value: T;
-  constructor(value: T) {
-    this.__value = value;
+  static of<T>(value: T) {
+    return new Maybe(value);
   }
 
-  static of<T = any>(value: T) {
-    return new Maybe(value);
+  constructor(value: T) {
+    this.__value = value;
   }
 
   isNothing() {
     return this.__value === undefined || this.__value === null;
   }
 
-  map(f: FunctionType): Maybe {
-    return this.isNothing() ? Maybe.of(null) : Maybe.of(f(this.__value));
+  map<RetType>(fn: Mapper<T, RetType>): Maybe<any> {
+    return this.isNothing() ? Maybe.of(null) : Maybe.of<RetType>(fn(this.__value));
   }
 
-  flatMap() {
+  flatten() {
     return this.isNothing() ? null : this.__value;
   }
 
-  ap(m: Maybe) {
-    return m.map(this.__value as any);
+  ap(container: Maybe<any>) {
+    return container.map(this.__value as any)
   }
 }
 
-export const maybe = <T = any>(msg: T, f: FunctionType, m: Maybe) => {
+export const maybe = <T = any>(msg: T, f: FunctionType, m: Maybe<T>) => {
   return m.isNothing() ? msg : f(m.__value);
 };
 
