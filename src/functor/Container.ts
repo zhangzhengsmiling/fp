@@ -1,5 +1,6 @@
-import {  Mapper } from './../types.d';
-
+import { isMapperFunction } from './../utils/isMapperFunction';
+import {  Mapper } from './../types';
+import { Maybe } from '.';
 class Container<T> {
   __value: T;
   static of<T>(value: T) {
@@ -18,11 +19,11 @@ class Container<T> {
     return this.__value;
   }
 
-  ap(container: Container<any>) {
-    return container.map(this.__value as any);
+  ap<InputType>(container: Container<InputType>) {
+    if (!isMapperFunction(this.__value)) return Maybe.of(null);
+    return container.map(this.__value);
   }
 
 }
-
 
 export default Container;

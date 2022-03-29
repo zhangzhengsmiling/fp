@@ -1,3 +1,4 @@
+import { isMapperFunction } from './../utils/isMapperFunction';
 import { FunctionType , Mapper } from "src/types";
 
 class Maybe<T> {
@@ -22,8 +23,9 @@ class Maybe<T> {
     return this.isNothing() ? null : this.__value;
   }
 
-  ap(container: Maybe<any>) {
-    return container.map(this.__value as any);
+  ap<InputType>(container: Maybe<InputType>) {
+    if(!isMapperFunction(this.__value)) return Maybe.of(null);
+    return container.map(this.__value);
   }
 }
 

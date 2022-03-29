@@ -1,2 +1,2 @@
-const identity = <T = any>(v: T) => v;
+const identity = <T>(v: T) => v;
 export default identity;

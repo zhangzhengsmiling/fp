@@ -1,4 +1,6 @@
-import { FunctionType, Mapper } from './../types.d';
+import { isMapperFunction } from './../utils/isMapperFunction';
+import { Mapper } from './../types.d';
+import { Maybe } from '.';
 
 class Left<T> {
   __value: T;
@@ -17,8 +19,9 @@ class Left<T> {
   flatten() {
     return this.__value;
   }
-  ap(container: Left<any>) {
-    return container.map(this.__value as any);
+  ap<InputType>(container: Left<InputType>) {
+    if (!isMapperFunction(this.__value)) return Maybe.of(null);
+    return container.map(this.__value);
   }
 }
 
@@ -40,12 +43,13 @@ class Right<T> {
     return this.__value;
   }
 
-  ap(container: Right<any>) {
-    return container.map(this.__value as any);
+  ap<InputType>(container: Right<InputType>) {
+    if (!isMapperFunction(this.__value)) return Maybe.of(null);
+    return container.map(this.__value);
   }
 }
 
-export const either = <T>(f: FunctionType, g: FunctionType, e: Left<T> | Right<T>) => {
+export const either = <T>(f: Mapper<T, any>, g: Mapper<T, any>, e: Left<T> | Right<T>) => {
   switch(e.constructor) {
     case Left:
       return f(e.__value);
