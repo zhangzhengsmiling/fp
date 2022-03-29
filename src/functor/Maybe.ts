@@ -23,7 +23,7 @@ class Maybe<T> {
   }
 
   ap(container: Maybe<any>) {
-    return container.map(this.__value as any)
+    return container.map(this.__value as any);
   }
 }
 

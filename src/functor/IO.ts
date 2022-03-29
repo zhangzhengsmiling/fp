@@ -20,7 +20,7 @@ class IO<T> {
   }
 
   ap(container: IO<any>) {
-    return container.map(this.__value() as any)
+    return container.map(this.__value() as any);
   }
 }
 

@@ -1,4 +1,5 @@
 import { FunctionType } from 'src/types';
+
 const curry = (fn: FunctionType, len = fn.length) => {
   return (...args: any[]) => {
     if (args.length >= len) {
@@ -9,4 +10,3 @@ const curry = (fn: FunctionType, len = fn.length) => {
 };
 
 export default curry;
-

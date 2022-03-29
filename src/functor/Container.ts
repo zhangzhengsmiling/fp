@@ -19,7 +19,7 @@ class Container<T> {
   }
 
   ap(container: Container<any>) {
-    return container.map(this.__value as any)
+    return container.map(this.__value as any);
   }
 
 }

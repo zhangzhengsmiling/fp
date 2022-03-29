@@ -18,7 +18,7 @@ class Left<T> {
     return this.__value;
   }
   ap(container: Left<any>) {
-    return container.map(this.__value as any)
+    return container.map(this.__value as any);
   }
 }
 
@@ -41,7 +41,7 @@ class Right<T> {
   }
 
   ap(container: Right<any>) {
-    return container.map(this.__value as any)
+    return container.map(this.__value as any);
   }
 }
 
