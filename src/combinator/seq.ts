@@ -1,5 +1,6 @@
-import { FunctionType } from './../types.d';
-const seq = <T = any>(...fns: FunctionType[]) => (v: T) => {
+import { Mapper } from 'src/types';
+
+const seq = <InputType>(...fns: Mapper<InputType, unknown>[]) => (v: InputType) => {
   fns.forEach(fn => fn(v));
 };
 

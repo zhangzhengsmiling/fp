@@ -1,6 +1,6 @@
-import { FunctionType } from "src/types";
+import { Mapper, FnType } from "src/types";
 const fork =
-  <T = any>(f: FunctionType, g: FunctionType, combine: FunctionType) => 
-  (v: T) => combine(f(v), g(v));
+  <InputType, P, Q, RetType>( combine: FnType<[P, Q], RetType>, p: Mapper<InputType, P>, q: Mapper<InputType, Q>) => 
+    (v: InputType) => combine(p(v), q(v));
 
 export default fork;
