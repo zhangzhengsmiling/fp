@@ -1,5 +1,5 @@
 import { isMapperFunction } from './../utils/isMapperFunction';
-import { FunctionType , Mapper } from "src/types";
+import { FnType , Mapper } from "src/types";
 
 class Maybe<T> {
   __value: T;
@@ -15,7 +15,7 @@ class Maybe<T> {
     return this.__value === undefined || this.__value === null;
   }
 
-  map<RetType>(fn: Mapper<T, RetType>): Maybe<any> {
+  map<RetType>(fn: Mapper<T, RetType>): Maybe<RetType | null> {
     return this.isNothing() ? Maybe.of(null) : Maybe.of<RetType>(fn(this.__value));
   }
 
@@ -29,7 +29,7 @@ class Maybe<T> {
   }
 }
 
-export const maybe = <T = any>(msg: T, f: FunctionType, m: Maybe<T>) => {
+export const maybe = <T>(msg: T, f: FnType<[T], unknown>, m: Maybe<T>) => {
   return m.isNothing() ? msg : f(m.__value);
 };
 

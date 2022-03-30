@@ -1,3 +1,3 @@
-const flatten = (v: {flatten: any}) => v.flatten();
+const flatten = (v: {flatten: () => unknown}) => v.flatten();
 
 export default flatten;

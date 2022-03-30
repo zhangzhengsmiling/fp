@@ -19,7 +19,7 @@ class Container<T> {
     return this.__value;
   }
 
-  ap<InputType>(container: Container<InputType>) {
+  ap<InputType, RetType>(container: Container<InputType>): Container<RetType> | Maybe<null> {
     if (!isMapperFunction(this.__value)) return Maybe.of(null);
     return container.map(this.__value);
   }
