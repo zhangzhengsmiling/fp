@@ -11,7 +11,8 @@ class Left<T> {
   static of<T>(value: T) {
     return new Left(value);
   }
-
+  
+  // eslint-disable-next-line
   map<RetType>(_: Mapper<T, RetType>) {
     return this;
   }

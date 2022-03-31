@@ -1,6 +1,8 @@
+/* eslint-disable */
+import { Mapper } from 'src/types';
 
-const chain = (f: any) => (m: {flatMap: any; map: any;}) => {
-  return m.map(f).flatMap();
+const chain = (f: Mapper<unknown, unknown>) => (m: {flatten: () => unknown; map: any;}) => {
+  return m.map(f).flatten();
 };
 
 export default chain;

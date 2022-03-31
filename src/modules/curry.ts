@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { FunctionType } from 'src/types';
 
 type Tail<T extends any[]> = 
