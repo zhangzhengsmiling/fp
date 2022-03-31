@@ -1,3 +1,4 @@
+// eslint-disable-next-line
 const compose = <Param, RetType>(...fns: any[]) => {
   return (trigger?: Param) => {
     return fns.reduceRight((prev, fn) => {
