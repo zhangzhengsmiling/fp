@@ -23,7 +23,7 @@ class Maybe<T> {
     return this.isNothing() ? null : this.__value;
   }
 
-  ap<InputType>(container: Maybe<InputType>) {
+  ap<InputType, RetType>(container: Maybe<InputType>): Maybe<RetType> | Maybe<null> {
     if(!isMapperFunction(this.__value)) return Maybe.of(null);
     return container.map(this.__value);
   }
