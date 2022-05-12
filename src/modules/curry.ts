@@ -1,12 +1,12 @@
 /* eslint-disable */
 import { FunctionType } from 'src/types';
 
-type Tail<T extends any[]> = 
+type Tail<T extends any[]> =
   ((...args: T) => any) extends ((arg1: any, ...tail: infer A) => any) ? A : []
 
 type Length<T extends any[]> = T['length']
 
-type Prepend<E, T extends any[]> = 
+type Prepend<E, T extends any[]> =
   ((arg: E, ...args: T) => any) extends ((...args: infer U) => any) ? U : T
 
 type Drop<N extends number, T extends any[], I extends any[]=[]> = {
@@ -22,13 +22,15 @@ type CurryFn<P extends any[], R> =
       ? CurryFn<Drop<Length<T>, P> extends infer DT ? Cast<DT, any[]> : never, R>
       : R
 
-const curry = (fn: FunctionType, len = fn.length) => {
+const _curry = (fn: FunctionType, len = fn.length) => {
   return (...args: any[]) => {
     if (args.length >= len) {
       return fn(...args);
     }
-    return curry((...rest: any[]) => fn(...args, ...rest), len - args.length);
+    return _curry((...rest: any[]) => fn(...args, ...rest), len - args.length);
   };
 };
+
+const curry = (fn: FunctionType) => _curry(fn, fn.length);
 
 export default curry as <FnType extends (...args: any[]) => any>(fn: FnType) => CurryFn<Parameters<FnType>, ReturnType<FnType>>;

@@ -1,7 +1,9 @@
 import { FunctionType } from './../types.d';
 
-const pipe = <InputType>(...fns: FunctionType[]) => {
-  return (trigger: InputType) => {
+type PipType = <InputType>(...fns: FunctionType[]) => (trigger: InputType) => unknown
+
+const pipe: PipType = (...fns) => {
+  return (trigger) => {
     return fns.reduce((temp, fn) => fn(temp), trigger);
   };
 };

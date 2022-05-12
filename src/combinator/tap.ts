@@ -1,5 +1,8 @@
 import { Mapper } from 'src/types';
-const tap = <T>(f: Mapper<T, void>) => (v: T) => {
+
+type TapType = <T>(f: Mapper<T, void>) => (v: T) => T
+
+const tap: TapType = (f) => (v) => {
   f(v);
   return v;
 };
